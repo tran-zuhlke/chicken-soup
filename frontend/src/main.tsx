@@ -13,7 +13,10 @@ console.log(`Application version: ${getApplicationVersion()}`);
 
 let serverMockEnable = JSON.parse(import.meta.env.VITE_SERVER_MOCKS_ENABLED || true);
 if (serverMockEnable) {
-  worker.start({ onUnhandledRequest: 'bypass' });
+  worker.start({ onUnhandledRequest: 'bypass',
+      serviceWorker: {
+          url: `/${import.meta.env.VITE_BASE_PATH_PREFIX}/mockServiceWorker.js`,
+      }, });
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
