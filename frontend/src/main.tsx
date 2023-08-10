@@ -11,7 +11,6 @@ import { testId } from './testing/testId';
 import {basePathPrefix} from "./navigation/basePathPrefix";
 
 console.log(`Application version: ${getApplicationVersion()}`);
-console.log(`basePathPrefix: ${basePathPrefix}`);
 
 let serverMockEnable = JSON.parse(import.meta.env.VITE_SERVER_MOCKS_ENABLED || true);
 if (serverMockEnable) {
