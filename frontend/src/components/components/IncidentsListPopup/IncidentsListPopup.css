@@ -1,0 +1,46 @@
+.camera-incident-container {
+    display: flex;
+    gap: 8px;
+    height: fit-content;
+}
+
+.camera-incident-container button {
+    padding: 1px 8px 3px;
+}
+
+.modal-body {
+    padding: 0 0 8px !important;
+}
+
+.incident-container {
+    display: flex !important;
+    justify-content: space-between;
+    min-height: 55px;
+}
+
+.incident-container span {
+    margin: auto 0;
+}
+
+.incident-buttons-container, .guards-buttons-container {
+    display: flex;
+    gap: 8px;
+}
+
+.guards-buttons-container button {
+    width: 100%;
+}
+
+.guards-buttons-container li:not(:last-child)  {
+    padding: 0 0 8px;
+}
+
+.guards-buttons-container li:last-child  {
+    padding: 0;
+    border: 0;
+}
+
+.incidents-container {
+    max-height: 500px;
+    overflow-y: scroll;
+}

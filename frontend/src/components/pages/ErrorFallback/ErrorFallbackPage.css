@@ -1,0 +1,8 @@
+.error-fallback-page-container {
+    text-align: center;
+}
+
+.error-fallback-page-container img {
+    max-width: 75%;
+    margin-bottom: 35px;
+}

@@ -1,0 +1,262 @@
+openapi: '3.0.2'
+info:
+  title: Security Command Center API
+  version: '1.0'
+servers:
+  - url: https://6s7ti8egme.execute-api.us-east-1.amazonaws.com/scc-poc
+
+components:
+  schemas:
+    Camera:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        streamUrl:
+          type: string
+        premiseId:
+          type: string
+        incidents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Incident'
+    Guard:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        firstname:
+          type: string
+        token:
+          type: string
+    Incident:
+      type: object
+      properties:
+        id:
+          type: string
+        guardId:
+          type: string
+        ignored:
+          type: boolean
+        cameraId:
+          type: string
+        location:
+          type: string
+        status:
+          type: string
+        dateCreated:
+          type: string
+          format: date-time
+    Premise:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cameras:
+          type: array
+          items:
+            $ref: '#/components/schemas/Camera'
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        video:
+          type: object
+        picture:
+          type: object
+        incidentId:
+          type: string
+    UpdateIncidentRequest:
+      type: object
+      properties:
+        guardId:
+          type: string
+        ignored:
+          type: boolean
+
+tags:
+  - name: Guards
+    description: Security Guard endpoints
+  - name: Premises
+    description: Premises endpoints
+  - name: Incidents
+    description: Incident endpoints
+  
+paths:
+  # Guards
+  /guards:
+    get:
+      tags:
+        - Guards
+      description: Returns a list of guards.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Guard'
+  /guards/{guard_id}/incidents:
+    get:
+      tags:
+        - Guards
+      description: Returns a list of incidents for the specified guard.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Incident'                  
+  /guards/{guard_id}/{token}:
+    put:
+      tags:
+        - Guards
+      description: Register the security guard to the only-duty list.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guard'
+  # Incidents
+  /incidents:
+    get:
+      tags:
+        - Incidents
+      description: Returns a list of incidents.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Incident'
+    post:
+      tags:
+        - Incidents
+      description: Creates a new incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Incident'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+  /incidents/{incident_id}:
+    get:
+      tags:
+        - Incidents
+      description: Returns the specified incident.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+    put:
+      tags:
+        - Incidents
+      description: Updates the specified incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIncidentRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+
+  /incidents/{incident_id}/notes:
+    get:
+      tags:
+        - Notes
+      description: Returns a list of notes for the specified incident.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+    post:
+      tags:
+        - Notes
+      description: Creates a new note for the specified incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+
+  /incidents/new:
+    get:
+      tags:
+        - Incidents
+      description: Returns a list of new incidents.
+      parameters:
+        - in: query
+          name: incidentIds
+          required: true
+          schema:
+            type: string
+          description: The array of excluded incident ids concatenated by ','
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Incident'
+  # Premises
+  /premises:
+    get:
+      tags:
+        - Premises
+      description: Returns a list of premises.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Premise'

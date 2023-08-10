@@ -1,0 +1,74 @@
+name: Frontend Deployment 🚀
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-deployment.yml'
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: ./frontend
+
+      - name: Set environment vars
+        run: |
+          echo "VITE_APPLICATION_VERSION: ${{ vars.VITE_APPLICATION_VERSION }}"
+          echo "VITE_SERVER_MOCKS_ENABLED: ${{ vars.VITE_SERVER_MOCKS_ENABLED }}"
+          echo "VITE_SERVER_BASE_URL: ${{ vars.VITE_SERVER_BASE_URL }}"
+          echo "VITE_BASE_PATH_PREFIX: ${{ vars.VITE_BASE_PATH_PREFIX }}"
+          echo "VITE_SERVER_STAGE: ${{ vars.VITE_SERVER_STAGE }}"
+
+      - name: Build project
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          VITE_APPLICATION_VERSION: ${{ vars.VITE_APPLICATION_VERSION }}
+          VITE_SERVER_MOCKS_ENABLED: ${{ vars.VITE_SERVER_MOCKS_ENABLED }}
+          VITE_SERVER_BASE_URL: ${{ vars.VITE_SERVER_BASE_URL }}
+          VITE_BASE_PATH_PREFIX: ${{ vars.VITE_BASE_PATH_PREFIX }}
+          VITE_SERVER_STAGE: ${{ vars.VITE_SERVER_STAGE }}
+
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-files
+          path: ./frontend/dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment: dev
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

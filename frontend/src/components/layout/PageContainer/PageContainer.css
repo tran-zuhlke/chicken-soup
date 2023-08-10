@@ -1,0 +1,31 @@
+.page-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.page-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.page-header h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.user-container {
+    display: flex !important;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.user-container svg {
+    margin: auto 0;
+}
