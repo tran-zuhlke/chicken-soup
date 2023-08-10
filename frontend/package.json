@@ -1,5 +1,6 @@
 {
   "name": "@sfi/close-range-inspection-client",
+  "homepage": "https://tran-zuhlke.github.io/chicken-soup",
   "private": true,
   "version": "0.0.0",
   "scripts": {
