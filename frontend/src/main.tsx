@@ -15,7 +15,7 @@ let serverMockEnable = JSON.parse(import.meta.env.VITE_SERVER_MOCKS_ENABLED || t
 if (serverMockEnable) {
   worker.start({ onUnhandledRequest: 'bypass',
       serviceWorker: {
-          url: `/${import.meta.env.VITE_BASE_PATH_PREFIX}/mockServiceWorker.js`,
+          url: `/chicken-soup/mockServiceWorker.js`,
       }, });
 }
 
