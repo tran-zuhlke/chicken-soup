@@ -21,4 +21,8 @@ export const facadeApiMockHandlers = [
   rest.put(`${API_BASE_URL}/incidents/:incidentId`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockedGenericResponse));
   }),
+
+  rest.get(`${API_BASE_URL}/incidents/new`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]));
+  }),
 ];
