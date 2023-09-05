@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
   return {
-    props: { feed },
+    props: { feed: JSON.parse(JSON.stringify(feed)) },
     revalidate: 10,
   };
 };
@@ -31,11 +31,13 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <h1>Public Feed</h1>
         <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
+          {props.feed
+            .sort((left, right) => (left.title < right.title ? -1 : 1))
+            .map((post) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))}
         </main>
       </div>
       <style jsx>{`

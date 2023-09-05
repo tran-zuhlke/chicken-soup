@@ -18,6 +18,7 @@ model Post {
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?
+  createdAt DateTime  @default(now()) @map(name: "created_at")
   @@map(name: "posts")
 }
 
@@ -32,6 +33,7 @@ model User {
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
+  userDishes    UserDish[]
   @@map(name: "users")
 }
 
@@ -72,4 +74,33 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Dish {
+  id        String     @default(cuid()) @id
+  title     String
+  price     Int
+  imageUrl  String?
+  active    Boolean? @default(false)
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  userDishes    UserDish[]
+  @@map(name: "dishes")
+}
+
+model Payment {
+  id        String     @default(cuid()) @id
+  title     String
+  imageUrl  String?
+  description  String?
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  @@map(name: "payments")
+}
+
+model UserDish {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  user         User     @relation(fields:[userId], references:[id], onDelete: Cascade)
+  dishId       String   @map("dish_id")
+  dish         Dish     @relation(fields:[dishId], references:[id], onDelete: Cascade)
+  createdAt    DateTime  @default(now()) @map(name: "created_at")
 }

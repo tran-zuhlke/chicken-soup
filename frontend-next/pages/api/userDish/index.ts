@@ -7,14 +7,13 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 // Required fields in body: title
 // Optional fields in body: content
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { title, content } = req.body;
+  const { dishId, userEmail } = req.body;
 
   const session = await getServerSession(req, res, options);
-  const result = await prisma.post.create({
+  const result = await prisma.userDish.create({
     data: {
-      title: title,
-      content: content,
-      author: { connect: { email: session?.user?.email } },
+      dish: { connect: { id: dishId } },
+      user: { connect: { email: session?.user?.email } },
       createdAt: new Date(),
     },
   });

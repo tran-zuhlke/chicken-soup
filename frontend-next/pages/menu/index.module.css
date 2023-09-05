@@ -1,0 +1,4 @@
+.dishesContainer {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -6,6 +6,7 @@ import Post, { PostProps } from '../../components/Post';
 import prisma from '../../lib/prisma';
 import { getServerSession } from 'next-auth';
 import { options } from '../api/auth/[...nextauth]';
+import styles from './drafts.module.css';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getServerSession(req, res, options);
@@ -26,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
   return {
-    props: { drafts },
+    props: { drafts: JSON.parse(JSON.stringify(drafts)) },
   };
 };
 
@@ -52,26 +53,12 @@ const Drafts: React.FC<Props> = (props) => {
         <h1>My Drafts</h1>
         <main>
           {props.drafts.map((post) => (
-            <div key={post.id} className="post">
+            <div key={post.id} className={styles.post}>
               <Post post={post} />
             </div>
           ))}
         </main>
       </div>
-      <style jsx>{`
-        .post {
-          background: var(--geist-background);
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
     </Layout>
   );
 };

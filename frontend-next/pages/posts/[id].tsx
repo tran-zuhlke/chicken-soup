@@ -6,6 +6,7 @@ import { PostProps } from '../../components/Post';
 import prisma from '../../lib/prisma';
 import Router from 'next/router';
 import { useSession } from 'next-auth/react';
+import styles from './[id].module.css';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.post.findFirst({
@@ -19,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   });
   return {
-    props: post,
+    props: JSON.parse(JSON.stringify(post)),
   };
 };
 
@@ -63,32 +64,21 @@ const Post: React.FC<PostProps> = (props) => {
         <p>By {props?.author?.name || 'Unknown author'}</p>
         <ReactMarkdown children={props.content} />
         {!props.published && userHasValidSession && postBelongsToUser && (
-          <button onClick={() => publishPost(props.id)}>Publish</button>
+          <button className={styles.postButton} onClick={() => publishPost(props.id)}>
+            Publish
+          </button>
         )}
-        {userHasValidSession && postBelongsToUser && <button onClick={() => unpublishPost(props.id)}>Unpublish</button>}
-        {userHasValidSession && postBelongsToUser && <button onClick={() => deletePost(props.id)}>Delete</button>}
+        {props.published && userHasValidSession && postBelongsToUser && (
+          <button className={styles.postButton} onClick={() => unpublishPost(props.id)}>
+            Unpublish
+          </button>
+        )}
+        {userHasValidSession && postBelongsToUser && (
+          <button className={styles.postButton} onClick={() => deletePost(props.id)}>
+            Delete
+          </button>
+        )}
       </div>
-      <style jsx>{`
-        .page {
-          background: var(--geist-background);
-          padding: 2rem;
-        }
-
-        .actions {
-          margin-top: 2rem;
-        }
-
-        button {
-          background: #ececec;
-          border: 0;
-          border-radius: 0.125rem;
-          padding: 1rem 2rem;
-        }
-
-        button + button {
-          margin-left: 1rem;
-        }
-      `}</style>
     </Layout>
   );
 };

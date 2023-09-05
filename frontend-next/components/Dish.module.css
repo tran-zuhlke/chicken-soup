@@ -1,0 +1,48 @@
+.dishContainer {
+    cursor: pointer;
+    color: inherit;
+    background: white;
+    transition: box-shadow 0.1s ease-in;
+    width: 400px;
+    height: 150px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dishContainer.selectedDish {
+    cursor: auto;
+}
+
+.dishContainer:hover:not(.selectedDish) {
+    box-shadow: 1px 1px 3px #aaa;
+}
+
+.dishInfo {
+    margin: auto 36px;
+}
+
+.dishInfo p {
+    font-size: larger;
+}
+
+.dishInfo h2 {
+    font-weight: lighter;
+}
+
+.removeIcon {
+    margin-left: -20px;
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+}
+
+.dishImage img {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+}
+
+.dishContainer_ {
+    display: flex;
+}
