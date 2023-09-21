@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'frontend/**'
-      - '.github/workflows/frontend-actions.yml'
+      - '.github/workflows/frontend-build.yml'
     branches:
       - main
       

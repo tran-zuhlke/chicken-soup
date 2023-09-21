@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  sfi-image-upload:
+    container_name: sfi-image-upload
+    image: dsinfra.azurecr.io/sfi/file-upload:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - uploads:/usr/src/app/uploads/backend/uploads
+    networks:
+      - sfi-image-upload-network
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      FACADE_API_BASE_URL: ${FACADE_API_BASE_URL}
+      API_MOCKS_ENABLED: ${API_MOCKS_ENABLED}
+    depends_on:
+      sfi-image-upload-db:
+        condition: service_healthy
+
+  sfi-image-upload-db:
+    image: postgres:15.3-bullseye
+    container_name: sfi-image-upload-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - sfi-image-upload-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  uploads:
+  pgdata:
+
+networks:
+  sfi-image-upload-network:
+    name: sfi-image-upload-network
