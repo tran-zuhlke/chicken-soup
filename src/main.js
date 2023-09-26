@@ -7,7 +7,7 @@ const api_mocks_1 = require("./api/mocks/api.mocks");
 const global_exception_filter_1 = require("./infrastructure/filters/global-exception.filter");
 const bodyParser = require("body-parser");
 const bootstrap = async () => {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: false });
     app.setGlobalPrefix('/api');
     app.useGlobalFilters(new global_exception_filter_1.GlobalExceptionFilter());
     app.use(bodyParser.json({ limit: '10mb' }));
