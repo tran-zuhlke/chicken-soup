@@ -25,12 +25,13 @@ const upload_images_use_case_1 = require("./usecase/UploadImages/upload-images.u
 const get_upload_use_case_1 = require("./usecase/get-upload.use-case");
 const notify_project_upload_completion_use_case_1 = require("./usecase/notify-project-upload-completion.use-case");
 const update_image_checksum_use_case_service_1 = require("./usecase/update-image-checksum.use-case.service");
+const test_controller_1 = require("./test.controller");
 let ProjectsModule = class ProjectsModule {
 };
 ProjectsModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([project_entity_1.ProjectDbEntity, image_entity_1.ImageDbEntity, upload_entity_1.UploadDbEntity]), axios_1.HttpModule],
-        controllers: [projects_controller_1.ProjectsController, uploads_controller_1.UploadsController],
+        controllers: [projects_controller_1.ProjectsController, uploads_controller_1.UploadsController, test_controller_1.TestController],
         providers: [
             create_project_use_case_1.CreateProjectUseCase,
             create_upload_use_case_1.CreateUploadUseCase,

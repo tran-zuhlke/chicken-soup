@@ -15,9 +15,6 @@ const dataSource_1 = require("./persistence/dataSource");
 const createTestDataSource_1 = require("./testing/createTestDataSource");
 const config_1 = require("@nestjs/config");
 const projects_module_1 = require("./application/projects/projects.module");
-const core_1 = require("@nestjs/core");
-const app_guard_1 = require("./infrastructure/guards/app.guard");
-const project_authorization_guard_1 = require("./infrastructure/guards/project-authorization.guard");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -41,13 +38,6 @@ AppModule = __decorate([
             projects_module_1.ProjectsModule,
         ],
         controllers: [],
-        providers: [
-            project_authorization_guard_1.ProjectAuthorizationGuard,
-            {
-                provide: core_1.APP_GUARD,
-                useClass: app_guard_1.AppGuard,
-            },
-        ],
     })
 ], AppModule);
 exports.AppModule = AppModule;
