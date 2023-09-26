@@ -6,7 +6,7 @@ import { GlobalExceptionFilter } from './infrastructure/filters/global-exception
 import * as bodyParser from 'body-parser';
 
 const bootstrap = async () => {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: false });
   app.setGlobalPrefix('/api');
   app.useGlobalFilters(new GlobalExceptionFilter());
   // app.enableCors();

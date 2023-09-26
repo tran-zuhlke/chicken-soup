@@ -17,5 +17,9 @@ export default defineConfig(({ mode }) => {
         provider: 'istanbul',
       },
     },
+    server: {
+      open: true,
+      origin: 'https://chicken-soup-mq8g.vercel.app/',
+    },
   };
 });
