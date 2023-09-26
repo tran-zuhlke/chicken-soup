@@ -13,7 +13,7 @@ const PageContainer: React.FC<Props> = ({ user, children }) => {
   return (
     <div className="page-container">
       <div className="page-header">
-        <h1>Security Command Center</h1>
+        <h1>Chicken Soup</h1>
         {user !== undefined && (
           <div className="user-container btn btn-outline-dark">
             <BiSolidUser size="20" />

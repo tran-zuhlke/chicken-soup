@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-frontend:
-    name: Build
+    name: Build Frontend
     runs-on: ubuntu-latest
     environment: dev
 
@@ -54,7 +54,7 @@ jobs:
           path: ./frontend/dist
 
   build-backend:
-    name: Build
+    name: Build Backend
     needs: build-frontend
     runs-on: ubuntu-latest
     environment: dev

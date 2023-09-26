@@ -6,9 +6,6 @@ import { createDataSource } from './persistence/dataSource';
 import { createTestDataSource } from './testing/createTestDataSource';
 import { ConfigModule } from '@nestjs/config';
 import { ProjectsModule } from './application/projects/projects.module';
-import { APP_GUARD } from '@nestjs/core';
-import { AppGuard } from './infrastructure/guards/app.guard';
-import { ProjectAuthorizationGuard } from './infrastructure/guards/project-authorization.guard';
 
 @Module({
   imports: [
@@ -30,12 +27,12 @@ import { ProjectAuthorizationGuard } from './infrastructure/guards/project-autho
     ProjectsModule,
   ],
   controllers: [],
-  providers: [
-    ProjectAuthorizationGuard,
-    {
-      provide: APP_GUARD,
-      useClass: AppGuard,
-    },
-  ],
+  // providers: [
+  //   ProjectAuthorizationGuard,
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: AppGuard,
+  //   },
+  // ],
 })
 export class AppModule {}

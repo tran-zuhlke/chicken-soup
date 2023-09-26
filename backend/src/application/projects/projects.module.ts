@@ -16,10 +16,11 @@ import { UploadImagesUseCase } from './usecase/UploadImages/upload-images.use-ca
 import { GetUploadUseCase } from './usecase/get-upload.use-case';
 import { NotifyProjectUploadCompletionUseCase } from './usecase/notify-project-upload-completion.use-case';
 import { UpdateImageChecksumUseCase } from './usecase/update-image-checksum.use-case.service';
+import { TestController } from './test.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ProjectDbEntity, ImageDbEntity, UploadDbEntity]), HttpModule],
-  controllers: [ProjectsController, UploadsController],
+  controllers: [ProjectsController, UploadsController, TestController],
   providers: [
     CreateProjectUseCase,
     CreateUploadUseCase,

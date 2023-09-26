@@ -8,16 +8,19 @@ import { Toaster } from 'react-hot-toast';
 import { getApplicationVersion } from './utils/getApplicationVersion';
 import { worker } from './api/mocks/mockServer';
 import { testId } from './testing/testId';
-import {basePathPrefix} from "./navigation/basePathPrefix";
+import { basePathPrefix } from './navigation/basePathPrefix';
 
 console.log(`Application version: ${getApplicationVersion()}`);
 
 let serverMockEnable = JSON.parse(import.meta.env.VITE_SERVER_MOCKS_ENABLED || true);
 if (serverMockEnable) {
-  worker.start({ onUnhandledRequest: 'bypass',
-      serviceWorker: {
-          url: `/${basePathPrefix}/mockServiceWorker.js`,
-      }, });
+  console.log(basePathPrefix);
+  worker.start({
+    onUnhandledRequest: 'bypass',
+    serviceWorker: {
+      url: `${import.meta.env.VITE_SERVER_BASE_URL}/${basePathPrefix}/mockServiceWorker.js`,
+    },
+  });
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

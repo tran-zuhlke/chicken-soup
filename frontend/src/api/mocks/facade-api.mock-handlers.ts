@@ -25,4 +25,8 @@ export const facadeApiMockHandlers = [
   rest.get(`${API_BASE_URL}/incidents/new`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json([]));
   }),
+
+  rest.get(`${API_BASE_URL}/api/test`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ content: 'OK' }));
+  }),
 ];
