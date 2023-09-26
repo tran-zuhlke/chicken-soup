@@ -10,7 +10,6 @@ const bootstrap = async () => {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.setGlobalPrefix('/api');
     app.useGlobalFilters(new global_exception_filter_1.GlobalExceptionFilter());
-    app.enableCors();
     app.use(bodyParser.json({ limit: '10mb' }));
     const config = new swagger_1.DocumentBuilder()
         .setTitle('BTD Image Upload')
