@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
     server: {
       open: true,
       origin: 'https://chicken-soup-mq8g.vercel.app/',
+      cors: false,
     },
   };
 });

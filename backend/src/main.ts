@@ -4,12 +4,43 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiMocks } from './api/mocks/api.mocks';
 import { GlobalExceptionFilter } from './infrastructure/filters/global-exception.filter';
 import * as bodyParser from 'body-parser';
+import { ImATeapotException } from '@nestjs/common';
+
+const whitelist = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://10.0.2.2:3000',
+  'https://tran-zuhlke.github.io/',
+];
 
 const bootstrap = async () => {
-  const app = await NestFactory.create(AppModule, { cors: false });
+  const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api');
   app.useGlobalFilters(new GlobalExceptionFilter());
-  // app.enableCors();
+  // app.enableCors({
+  //   allowedHeaders: ['content-type'],
+  //   origin: 'https://tran-zuhlke.github.io/',
+  //   credentials: true,
+  // });
+  app.enableCors({
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
+    origin: function (origin, callback) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+      if (
+        whitelist.includes(origin) || // Checks your whitelist
+        !!origin.match(/yourdomain\.com$/) // Overall check for your domain
+      ) {
+        console.log('allowed cors for:', origin);
+        callback(null, true);
+      } else {
+        console.log('blocked cors for:', origin);
+        callback(new ImATeapotException('Not allowed by CORS'), false);
+      }
+    },
+  });
   app.use(bodyParser.json({ limit: '10mb' }));
 
   const config = new DocumentBuilder()
