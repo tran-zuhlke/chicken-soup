@@ -17,13 +17,10 @@ import { GetUploadUseCase } from './usecase/get-upload.use-case';
 import { NotifyProjectUploadCompletionUseCase } from './usecase/notify-project-upload-completion.use-case';
 import { UpdateImageChecksumUseCase } from './usecase/update-image-checksum.use-case.service';
 import { TestController } from './test.controller';
-import { DishesController } from './dishes.controller';
-import { GetDishUseCase } from './usecase/get-dish.use-case';
-import { DishDbEntity } from '../../persistence/dish.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProjectDbEntity, ImageDbEntity, UploadDbEntity, DishDbEntity]), HttpModule],
-  controllers: [ProjectsController, UploadsController, TestController, DishesController],
+  imports: [TypeOrmModule.forFeature([ProjectDbEntity, ImageDbEntity, UploadDbEntity]), HttpModule],
+  controllers: [ProjectsController, UploadsController, TestController],
   providers: [
     CreateProjectUseCase,
     CreateUploadUseCase,
@@ -34,7 +31,6 @@ import { DishDbEntity } from '../../persistence/dish.entity';
     GetUploadUseCase,
     UpdateImageChecksumUseCase,
     NotifyProjectUploadCompletionUseCase,
-    GetDishUseCase,
     FacadeApi,
   ],
   exports: [CheckProjectAuthorizationUseCase],

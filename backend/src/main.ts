@@ -17,11 +17,6 @@ const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api');
   app.useGlobalFilters(new GlobalExceptionFilter());
-  // app.enableCors({
-  //   allowedHeaders: ['content-type'],
-  //   origin: 'https://tran-zuhlke.github.io/',
-  //   credentials: true,
-  // });
   app.enableCors({
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
     origin: function (origin, callback) {

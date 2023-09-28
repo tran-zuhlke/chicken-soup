@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Logger,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ApiException } from '../../api/api.exception';
@@ -38,6 +39,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     } else if (exception instanceof ForbiddenException) {
       message = exception.message;
       status = HttpStatus.FORBIDDEN;
+    } else if (exception instanceof UnauthorizedException) {
+      message = exception.message;
+      status = HttpStatus.UNAUTHORIZED;
     } else if (exception instanceof Error) {
       message = exception.message;
     } else {
