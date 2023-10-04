@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       open: true,
-      origin: `${env.VITE_SERVER_BASE_URL ?? ''}`,
+      origin: `${env.VITE_SERVER_BASE_URL ? env.VITE_SERVER_BASE_URL + '/' : ''}`,
       cors: false,
     },
   };
