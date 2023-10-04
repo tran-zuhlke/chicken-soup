@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       open: true,
-      origin: 'https://chicken-soup-mq8g.vercel.app/',
+      origin: `${env.VITE_SERVER_BASE_URL ?? ''}`,
       cors: false,
     },
   };

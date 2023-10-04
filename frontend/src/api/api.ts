@@ -1,6 +1,5 @@
 import { ExceptionResponse } from './dto/ExceptionResponse';
 import { ApiException } from './api.exception';
-import { basePathPrefix } from '../navigation/basePathPrefix';
 
 const serverBaseUrl = import.meta.env.VITE_SERVER_BASE_URL ?? '';
 const serverStage = import.meta.env.VITE_SERVER_STAGE ?? '';

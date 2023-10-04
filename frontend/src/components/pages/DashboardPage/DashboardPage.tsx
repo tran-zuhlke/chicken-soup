@@ -1,12 +1,12 @@
 import './DashboardPage.css';
 import React, { useEffect, useState } from 'react';
 import PageContainer from '../../layout/PageContainer/PageContainer';
-import { touchBackend } from '../../../api/test.api';
+import { checkHealth } from '../../../api/test.api';
 
 const DashboardPage: React.FC = () => {
   const [res, setRes] = useState('');
   useEffect(() => {
-    touchBackend().then((res) => {
+    checkHealth().then((res) => {
       setRes(res.content);
     });
   }, []);
