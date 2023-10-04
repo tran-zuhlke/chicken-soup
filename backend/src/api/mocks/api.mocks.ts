@@ -1,4 +1,4 @@
 import { setupServer } from 'msw/node';
-import { facadeApiMockHandlers } from './facade-api.mock-handlers';
+import { apiMockHandlers } from './api-mock.handlers';
 
-export const apiMocks = setupServer(...facadeApiMockHandlers);
+export const apiMocks = setupServer(...apiMockHandlers);

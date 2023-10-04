@@ -3,9 +3,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { createDataSource } from './persistence/dataSource';
-import { createTestDataSource } from './testing/createTestDataSource';
 import { ConfigModule } from '@nestjs/config';
-import { ProjectsModule } from './application/projects/projects.module';
 import { DishesModule } from './application/dishes/dishes.module';
 import { AuthModule } from './application/auth/auth.module';
 import { AuthGuard } from './infrastructure/guards/auth.guard';
@@ -25,10 +23,9 @@ import { APP_GUARD } from '@nestjs/core';
         migrationsRun: false,
       }),
       dataSourceFactory: async () => {
-        return process.env.NODE_ENV === 'test' ? createTestDataSource() : createDataSource();
+        return createDataSource();
       },
     }),
-    ProjectsModule,
     DishesModule,
     AuthModule,
   ],
