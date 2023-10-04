@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { createDataSource } from './persistence/dataSource';
 import { ConfigModule } from '@nestjs/config';
 import { DishesModule } from './application/dishes/dishes.module';
 import { AuthModule } from './application/auth/auth.module';
@@ -17,15 +15,6 @@ import { HealthModule } from './application/health/health.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../../', 'frontend/dist'),
-    }),
-    TypeOrmModule.forRootAsync({
-      useFactory: () => ({
-        type: 'postgres',
-        migrationsRun: false,
-      }),
-      dataSourceFactory: async () => {
-        return createDataSource();
-      },
     }),
     DishesModule,
     AuthModule,
