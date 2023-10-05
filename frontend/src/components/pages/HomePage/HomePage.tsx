@@ -1,4 +1,4 @@
-import './DashboardPage.css';
+import './HomePage.css';
 import React, { useEffect, useState } from 'react';
 import PageContainer from '../../layout/PageContainer/PageContainer';
 import { checkHealth } from '../../../api/health.api';
@@ -12,10 +12,11 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   return (
-    <PageContainer>
+    <PageContainer title={'Home Sweet Home'}>
       <div className="dashboard-page-container">
-        <h4>Response</h4>
-        <span>{res}</span>
+        <h4>
+          Server Health: <strong>{res}</strong>
+        </h4>
       </div>
     </PageContainer>
   );
