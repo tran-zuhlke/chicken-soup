@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FORM_MAX_CHARACTERS, FORM_MAX_CHARACTERS_EXCEEDED_MESSAGE, FORM_REQUIRED_FIELD_MESSAGE } from './constants';
 import { UserContext } from '../../../context/UserContext';
-import { login } from '../../../api/users.api';
+import { getUserProfile, login } from '../../../api/users.api';
 import { useNavigate } from 'react-router-dom';
 import { Page } from '../../../navigation/Page';
 import { basePathPrefix } from '../../../navigation/basePathPrefix';
@@ -21,12 +21,16 @@ const LoginPage: React.FC = () => {
   const onVerifyAuthorization = async (username: string, password: string) => {
     try {
       const { access_token } = await login(username, password);
-      writeAuthorizationDetailsToSessionStorage(access_token);
       setToken(access_token);
+      await writeAuthorizationDetailsToSessionStorage(access_token, username);
+
+      const userProfile = await getUserProfile();
+      console.log(userProfile);
+
       navigate(`${basePathPrefix}/${Page.HOME}`);
     } catch (e) {
       toast.error(`Token validation failed: ${(e as ExceptionResponse).message}`);
-      writeAuthorizationDetailsToSessionStorage('');
+      writeAuthorizationDetailsToSessionStorage('', '');
       console.error('Error validating project token: ', e);
     }
   };

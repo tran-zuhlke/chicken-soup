@@ -22,7 +22,7 @@ const PageContainer: React.FC<Props> = ({ user, title, children }) => {
           {user !== undefined && (
             <div className="user-container btn btn-outline-dark">
               <BiSolidUser size="20" />
-              {user.firstname}
+              {user.firstname ?? user.username}
             </div>
           )}
         </div>
